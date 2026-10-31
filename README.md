@@ -5,6 +5,8 @@
 [![Join Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/7BjCgDYaBP)
 [![More modules by Sephral](https://img.shields.io/badge/GitHub-More%20modules%20by%20Sephral-181717?logo=github&logoColor=white)](https://github.com/Sephral)
 
+![Handout Lens demo](media/demo.gif)
+
 ## Highlights
 
 * **Zoom where you point:** mouse wheel, trackpad pinch, two fingers on a tablet, double click or keys. Up to 800 % and back to the whole picture with one click.
