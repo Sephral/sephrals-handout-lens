@@ -1,0 +1,233 @@
+{
+  "SHL": {
+    "gear": "Einstellungen",
+    "Conflict": "{module} zoomt ebenfalls in Foundrys Bildfenstern. Handout Lens überlässt ihm diese Fenster, die Handout-Mappe funktioniert weiter.",
+    "LANGUAGE": {
+      "default": "Wie Foundry",
+      "de": "Deutsch",
+      "en": "English"
+    },
+    "SETTINGS": {
+      "uiLanguage": {
+        "name": "Sprache des Moduls",
+        "hint": "Sprache von Handout Lens auf diesem Gerät. \"Wie Foundry\" folgt der Sprache von Foundry."
+      },
+      "theme": {
+        "name": "Aussehen",
+        "hint": "Signature zeigt Abschrift und Handout-Mappe auf warmem Papier, Foundry hält sie dunkel wie den Rest von Foundry.",
+        "signature": "Signature (Papier)",
+        "foundry": "Foundry (dunkel)"
+      },
+      "enabled": {
+        "name": "Zoom und Lupe in Bildfenstern",
+        "hint": "Jedes Bildfenster bekommt Zoom, Lupe, Lesehilfen und Leseabschnitte. Aus: Foundrys einfaches Bildfenster."
+      },
+      "toolbar": {
+        "name": "Werkzeugleiste",
+        "hint": "Die Leiste unten im Bild kann verblassen, solange die Maus ruht, oder immer sichtbar bleiben.",
+        "auto": "Verblasst, wenn die Maus ruht",
+        "always": "Immer sichtbar"
+      },
+      "maxZoom": {
+        "name": "Stärkster Zoom",
+        "hint": "Wie weit sich ein Bild vergrößern lässt, als Vielfaches seiner eigenen Pixel (8 heißt 800 %)."
+      },
+      "lensSize": {
+        "name": "Größe der Lupe",
+        "hint": "Durchmesser der Lupe in Pixeln."
+      },
+      "lensZoom": {
+        "name": "Stärke der Lupe",
+        "hint": "Wie stark die Lupe zu Beginn vergrößert. Umschalt und Mausrad ändern das, während die Lupe zu sehen ist."
+      },
+      "showMarkers": {
+        "name": "Leseabschnitte nummerieren",
+        "hint": "Kleine Nummern im Bild zeigen, wo die Leseabschnitte liegen. Ein Klick springt hin."
+      },
+      "rememberView": {
+        "name": "Ansicht merken",
+        "hint": "Öffnet sich ein Bild auf diesem Gerät wieder, zeigt es denselben Ausschnitt, Winkel und dieselben Lesehilfen wie zuletzt."
+      },
+      "resolutionHint": {
+        "name": "Vor kleinen Bildern warnen",
+        "hint": "Nur für die SL: ein Hinweis, wenn ein Bild zu klein ist, um seinen Text vergrößert zu lesen, oder so groß, dass es langsam lädt."
+      },
+      "collectShared": {
+        "name": "Gezeigte Bilder sammeln",
+        "hint": "Jedes Bild, das die SL einem Spieler zeigt, landet in dessen Handout-Mappe und lässt sich später wieder öffnen."
+      },
+      "lateJoinMinutes": {
+        "name": "Später Verbundenen zeigen (Minuten)",
+        "hint": "Wer sich innerhalb dieser Zeit verbindet, nachdem die SL ein Bild gezeigt hat, bekommt es auch. 0 schaltet das ab."
+      }
+    },
+    "Viewer": {
+      "stage": "Bild. Mausrad zoomt, Ziehen verschiebt, Doppelklick zoomt hinein oder heraus, Umschalt zeigt die Lupe.",
+      "toolbar": "Bildwerkzeuge"
+    },
+    "Tool": {
+      "zoomOut": "Verkleinern",
+      "zoomIn": "Vergrößern",
+      "actual": "Originalgröße (1:1)",
+      "fit": "Ganzes Bild",
+      "fitWidth": "Ganze Breite",
+      "rotateLeft": "Nach links drehen",
+      "rotateRight": "Nach rechts drehen",
+      "aids": "Lesehilfen",
+      "lens": "Lupe (oder Umschalt halten)",
+      "reading": "Lesemodus (Vollbild)",
+      "previous": "Vorheriger Abschnitt",
+      "next": "Nächster Abschnitt",
+      "overview": "Zurück zum ganzen Bild",
+      "text": "Abschrift",
+      "keep": "In meiner Handout-Mappe behalten",
+      "unkeep": "Aus meiner Handout-Mappe nehmen",
+      "lead": "Spieler folgen meinem Blick",
+      "edit": "Abschnitte und Abschrift bearbeiten"
+    },
+    "Nav": {
+      "overview": "Übersicht",
+      "count": "{count} Leseabschnitte, mit dem ersten beginnen",
+      "section": "Abschnitt {number}"
+    },
+    "Hud": {
+      "draw": "Klick nacheinander die Ecken der Notiz an, der Rahmen übernimmt ihre Schräge. Oder zieh einen geraden Rahmen.",
+      "corners": "{count} von 4 Ecken. Klick die nächste an, ein Klick auf die erste Ecke oder Enter schließt den Rahmen, ein Rechtsklick nimmt eine zurück.",
+      "finish": "Fertig",
+      "cancel": "Abbrechen",
+      "leading": "Spieler mit diesem Bild folgen deinem Blick",
+      "stop": "Beenden",
+      "followed": "Die SL führt den Blick",
+      "detach": "Selbst schauen",
+      "alone": "Du schaust selbst",
+      "rejoin": "Der SL folgen",
+      "small": "Nur {w} × {h} Pixel",
+      "smallHint": "Kleine Schrift in diesem Bild wird unscharf, wenn Spieler es vergrößern. Ein größerer Scan oder Export hilft.",
+      "huge": "Sehr groß: {w} × {h} Pixel",
+      "hugeHint": "Spieler mit langsamer Verbindung oder schwacher Grafik warten auf dieses Bild eine Weile.",
+      "hide": "Ausblenden"
+    },
+    "Aid": {
+      "contrast": "Kontrast",
+      "brightness": "Helligkeit",
+      "fine": "Winkel",
+      "gray": "Graustufen",
+      "invert": "Hell auf dunkel",
+      "pixel": "Scharfe Pixel",
+      "reset": "Zurücksetzen"
+    },
+    "Panel": {
+      "title": "Abschrift",
+      "whole": "Ganzes Bild",
+      "noText": "Keine Abschrift für diesen Abschnitt.",
+      "empty": "Es gibt noch keine Abschrift.",
+      "smaller": "Kleinere Schrift",
+      "larger": "Größere Schrift",
+      "speak": "Vorlesen",
+      "stop": "Vorlesen beenden",
+      "close": "Schließen",
+      "nothingToRead": "Hier gibt es nichts zum Vorlesen."
+    },
+    "Edit": {
+      "title": "Handout bearbeiten",
+      "hint": "Mit Leseabschnitten blättern Spieler durch ein Bild: Jeder Abschnitt wird vergrößert und gerade gedreht. Spieler sehen die Titel und Abschriften.",
+      "frames": "Zieh einen Rahmen, um ihn zu verschieben. Der ausgewählte Rahmen hat Griffe: Die Quadrate ändern seine Größe, der runde darüber dreht ihn (Umschalt: in 5-Grad-Schritten).",
+      "draw": "Abschnitt zeichnen",
+      "none": "Noch keine Leseabschnitte.",
+      "sectionTitle": "Titel des Abschnitts",
+      "sectionText": "Abschrift des Abschnitts",
+      "textPlaceholder": "Abschrift (optional)",
+      "angle": "Winkel",
+      "turnHandle": "Ziehen zum Drehen, Umschalt für 5-Grad-Schritte",
+      "go": "Zeigen",
+      "redraw": "Neu zeichnen",
+      "up": "Nach oben",
+      "down": "Nach unten",
+      "delete": "Löschen",
+      "deleteTitle": "Abschnitt löschen",
+      "deleteConfirm": "\"{name}\" mit seiner Abschrift löschen?",
+      "wholeText": "Abschrift des ganzen Bildes",
+      "lang": "Vorlesen auf",
+      "langDefault": "Sprache von Foundry",
+      "pending": "Noch nicht gespeichert",
+      "saving": "Speichert",
+      "saved": "Gespeichert",
+      "failed": "Nicht gespeichert",
+      "done": "Fertig",
+      "tooSmall": "Dieser Rahmen ist zu klein für einen Leseabschnitt. Zoome etwas heraus und zeichne ihn noch einmal.",
+      "limit": "Ein Bild kann höchstens {count} Leseabschnitte haben.",
+      "saveFailed": "Das Handout konnte nicht gespeichert werden."
+    },
+    "Folder": {
+      "title": "Handout-Mappe",
+      "menuLabel": "Handout-Mappe öffnen",
+      "menuHint": "Jedes Bild, das dir gezeigt wurde oder das du behalten hast, zum erneuten Öffnen.",
+      "search": "Suchen",
+      "count": "{count} Bilder",
+      "countOne": "1 Bild",
+      "empty": "Noch keine Handouts. Wenn die SL dir ein Bild zeigt, landet es hier.",
+      "untitled": "Handout ohne Titel",
+      "open": "Öffnen",
+      "pin": "Oben anheften",
+      "unpin": "Nicht mehr anheften",
+      "rename": "Umbenennen",
+      "name": "Name",
+      "save": "Speichern",
+      "remove": "Aus der Mappe nehmen",
+      "added": "In deiner Handout-Mappe behalten.",
+      "saveFailed": "Die Handout-Mappe konnte nicht gespeichert werden."
+    },
+    "Share": {
+      "view": "Die Spieler sehen das Bild mit deinem Zoom.",
+      "closed": "Das Bild wurde für alle geschlossen.",
+      "small": "Dieses Bild hat nur {w} × {h} Pixel. Kleine Schrift darin wird unscharf, wenn Spieler es vergrößern.",
+      "huge": "Dieses Bild hat {w} × {h} Pixel und lädt bei Spielern womöglich eine Weile."
+    },
+    "Control": {
+      "folder": "Handout-Mappe",
+      "edit": "Abschnitte und Abschrift bearbeiten",
+      "lead": "Spieler folgen meinem Blick (an oder aus)",
+      "shareView": "Spielern mit diesem Zoom zeigen",
+      "closeAll": "Für alle schließen",
+      "noViewer": "Handout Lens ist für dieses Fenster abgeschaltet."
+    },
+    "Keys": {
+      "zoomIn": "Bild: vergrößern",
+      "zoomOut": "Bild: verkleinern",
+      "fit": "Bild: ganzes Bild",
+      "next": "Bild: nächster Abschnitt (oder nach rechts)",
+      "previous": "Bild: vorheriger Abschnitt (oder nach links)",
+      "panUp": "Bild: nach oben",
+      "panDown": "Bild: nach unten",
+      "lens": "Bild: Lupe an oder aus",
+      "reading": "Bild: Lesemodus",
+      "openFolder": "Handout-Mappe öffnen"
+    },
+    "SELFTEST": {
+      "Title": "Selbsttest von Handout Lens",
+      "Run": "Selbsttest starten",
+      "Hint": "Prüft das Bildfenster, die Speicherorte und einen Testbetrachter. Das Ergebnis kommt als Flüstern in den Chat.",
+      "Popout": "Foundrys Bildfenster wurde nicht gefunden.",
+      "Share": "Foundrys Funktion zum Zeigen von Bildern wurde nicht gefunden.",
+      "Socket": "Die Verbindung zum Server fehlt.",
+      "Storage": "Der Speicherort \"{key}\" fehlt.",
+      "Conflict": "{module} zoomt ebenfalls in Bildfenstern, deshalb bleibt der Betrachter aus.",
+      "Disabled": "Zoom und Lupe sind in den Einstellungen dieses Geräts abgeschaltet.",
+      "Texts": "Texte fehlen: {keys}",
+      "Viewer": "Der Testbetrachter ist nicht gestartet.",
+      "Problems": "Handout Lens: {problems} von {checks} Prüfungen fehlgeschlagen.",
+      "Passed": "Handout Lens: alle {checks} Prüfungen bestanden.",
+      "Version": "Foundry {current}, geprüft mit {tested}.",
+      "NoSpeech": "Dieser Browser kann nicht vorlesen.",
+      "NoFullscreen": "Dieser Browser erlaubt hier kein Vollbild, der Lesemodus füllt stattdessen das Fenster.",
+      "NewVersions": "Handout Lens wurde mit einer älteren Foundry-Version geprüft ({versions}). Der Selbsttest in den Moduleinstellungen prüft es."
+    },
+    "DEBUG": {
+      "Title": "Debug-Datei",
+      "Save": "Debug-Datei speichern",
+      "Hint": "Speichert eine Datei für Fehlerberichte über alle Module von Sephral in dieser Welt: Versionen, Einstellungen und was die Module aufgezeichnet haben, etwa die letzten Chatnachrichten, die sie gelesen haben. Sie enthält Chattext und Flüsternachrichten, prüfe sie vor dem Teilen.",
+      "Entry": "Debug-Datei speichern (Sephral’s Module)",
+      "Saved": "Debug-Datei {file} gespeichert. Sie enthält Chattext und Flüsternachrichten, prüfe sie vor dem Teilen."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "sephrals-handout-lens",
+  "title": "Sephral’s Handout Lens",
+  "description": "Every image the GM shows can be zoomed, searched with a magnifying lens and read piece by piece: reading aids, straightened reading sections with a transcript that can be read aloud, the GM's view shared live, and a handout folder that keeps every image a player was shown.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": 13,
+    "verified": "14.369"
+  },
+  "authors": [
+    {
+      "name": "Sephral",
+      "url": "https://github.com/Sephral"
+    }
+  ],
+  "url": "https://github.com/Sephral/sephrals-handout-lens.git",
+  "esmodules": [
+    "scripts/shl.mjs"
+  ],
+  "styles": [
+    "styles/shl.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    }
+  ],
+  "socket": true
+}

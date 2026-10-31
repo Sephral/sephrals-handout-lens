@@ -1,0 +1,233 @@
+{
+  "SHL": {
+    "gear": "Settings",
+    "Conflict": "{module} also zooms Foundry's image windows. Handout Lens leaves those windows to it, the handout folder still works.",
+    "LANGUAGE": {
+      "default": "Like Foundry",
+      "de": "Deutsch",
+      "en": "English"
+    },
+    "SETTINGS": {
+      "uiLanguage": {
+        "name": "Module language",
+        "hint": "Language of Handout Lens on this device. \"Like Foundry\" follows Foundry's language."
+      },
+      "theme": {
+        "name": "Look",
+        "hint": "Signature shows the transcript and the handout folder on warm paper, Foundry keeps them dark like the rest of Foundry.",
+        "signature": "Signature (paper)",
+        "foundry": "Foundry (dark)"
+      },
+      "enabled": {
+        "name": "Zoom and lens in image windows",
+        "hint": "Every image window gets zoom, lens, reading aids and reading sections. Off: Foundry's plain image window."
+      },
+      "toolbar": {
+        "name": "Toolbar",
+        "hint": "The toolbar at the bottom of the picture can fade while the mouse rests, or always stay visible.",
+        "auto": "Fades while the mouse rests",
+        "always": "Always visible"
+      },
+      "maxZoom": {
+        "name": "Largest zoom",
+        "hint": "How far a picture can be enlarged, as a multiple of its own pixels (8 means 800 %)."
+      },
+      "lensSize": {
+        "name": "Lens size",
+        "hint": "Diameter of the magnifying lens in pixels."
+      },
+      "lensZoom": {
+        "name": "Lens strength",
+        "hint": "How much the lens enlarges at first. Shift and the mouse wheel change it while the lens shows."
+      },
+      "showMarkers": {
+        "name": "Number the reading sections",
+        "hint": "Small numbers on the picture show where the reading sections are. A click jumps to one."
+      },
+      "rememberView": {
+        "name": "Remember the view",
+        "hint": "When a picture opens again on this device, it shows the same part, angle and reading aids as last time."
+      },
+      "resolutionHint": {
+        "name": "Warn about small pictures",
+        "hint": "Only for GMs: a note when a picture is too small to read its text when enlarged, or so large that it loads slowly."
+      },
+      "collectShared": {
+        "name": "Collect shown pictures",
+        "hint": "Every picture the GM shows to a player goes into that player's handout folder, so it can be opened again later."
+      },
+      "lateJoinMinutes": {
+        "name": "Show to late players (minutes)",
+        "hint": "A player who connects within this time after the GM showed a picture gets it too. 0 switches this off."
+      }
+    },
+    "Viewer": {
+      "stage": "Picture. Wheel zooms, dragging moves, double click zooms in or out, Shift shows the lens.",
+      "toolbar": "Picture tools"
+    },
+    "Tool": {
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "actual": "Original size (1:1)",
+      "fit": "Whole picture",
+      "fitWidth": "Full width",
+      "rotateLeft": "Turn left",
+      "rotateRight": "Turn right",
+      "aids": "Reading aids",
+      "lens": "Lens (or hold Shift)",
+      "reading": "Reading mode (full screen)",
+      "previous": "Previous section",
+      "next": "Next section",
+      "overview": "Back to the whole picture",
+      "text": "Transcript",
+      "keep": "Keep in my handout folder",
+      "unkeep": "Remove from my handout folder",
+      "lead": "Players follow my view",
+      "edit": "Edit sections and transcript"
+    },
+    "Nav": {
+      "overview": "Overview",
+      "count": "{count} reading sections, start with the first",
+      "section": "Section {number}"
+    },
+    "Hud": {
+      "draw": "Click the corners of the note one after the other, the frame takes its slant. Or drag a straight frame.",
+      "corners": "{count} of 4 corners. Click the next one, a click on the first corner or Enter closes the frame, a right click takes one back.",
+      "finish": "Done",
+      "cancel": "Cancel",
+      "leading": "Players with this picture follow your view",
+      "stop": "Stop",
+      "followed": "The GM leads the view",
+      "detach": "Look around",
+      "alone": "You are looking around",
+      "rejoin": "Follow the GM",
+      "small": "Only {w} × {h} pixels",
+      "smallHint": "Small writing in this picture becomes blurry when players enlarge it. A larger scan or export helps.",
+      "huge": "Very large: {w} × {h} pixels",
+      "hugeHint": "Players with slow connections or weak graphics may wait a while for this picture.",
+      "hide": "Hide"
+    },
+    "Aid": {
+      "contrast": "Contrast",
+      "brightness": "Brightness",
+      "fine": "Angle",
+      "gray": "Grayscale",
+      "invert": "Light on dark",
+      "pixel": "Sharp pixels",
+      "reset": "Reset"
+    },
+    "Panel": {
+      "title": "Transcript",
+      "whole": "Whole picture",
+      "noText": "No transcript for this section.",
+      "empty": "There is no transcript yet.",
+      "smaller": "Smaller text",
+      "larger": "Larger text",
+      "speak": "Read aloud",
+      "stop": "Stop reading",
+      "close": "Close",
+      "nothingToRead": "There is nothing to read aloud here."
+    },
+    "Edit": {
+      "title": "Edit handout",
+      "hint": "Reading sections let players page through a picture: each section is enlarged and turned straight. Players see the titles and transcripts.",
+      "frames": "Drag a frame to move it. The selected frame has handles: the squares change its size, the round one above it turns it (Shift: steps of 5 degrees).",
+      "draw": "Draw a section",
+      "none": "No reading sections yet.",
+      "sectionTitle": "Title of the section",
+      "sectionText": "Transcript of the section",
+      "textPlaceholder": "Transcript (optional)",
+      "angle": "Angle",
+      "turnHandle": "Drag to turn, hold Shift for steps of 5 degrees",
+      "go": "Show",
+      "redraw": "Draw again",
+      "up": "Move up",
+      "down": "Move down",
+      "delete": "Delete",
+      "deleteTitle": "Delete section",
+      "deleteConfirm": "Delete \"{name}\" with its transcript?",
+      "wholeText": "Transcript of the whole picture",
+      "lang": "Read aloud in",
+      "langDefault": "Foundry's language",
+      "pending": "Not saved yet",
+      "saving": "Saving",
+      "saved": "Saved",
+      "failed": "Not saved",
+      "done": "Done",
+      "tooSmall": "This frame is too small to be a reading section. Zoom out a little and draw it again.",
+      "limit": "A picture can have at most {count} reading sections.",
+      "saveFailed": "The handout could not be saved."
+    },
+    "Folder": {
+      "title": "Handout folder",
+      "menuLabel": "Open handout folder",
+      "menuHint": "Every picture you were shown or kept, to open again.",
+      "search": "Search",
+      "count": "{count} pictures",
+      "countOne": "1 picture",
+      "empty": "No handouts yet. When the GM shows you a picture, it lands here.",
+      "untitled": "Untitled handout",
+      "open": "Open",
+      "pin": "Pin to the top",
+      "unpin": "Unpin",
+      "rename": "Rename",
+      "name": "Name",
+      "save": "Save",
+      "remove": "Remove from the folder",
+      "added": "Kept in your handout folder.",
+      "saveFailed": "The handout folder could not be saved."
+    },
+    "Share": {
+      "view": "The players see the picture at your zoom.",
+      "closed": "The picture was closed for everyone.",
+      "small": "This picture has only {w} × {h} pixels. Small writing in it becomes blurry when players enlarge it.",
+      "huge": "This picture has {w} × {h} pixels and may take a while to load for players."
+    },
+    "Control": {
+      "folder": "Handout folder",
+      "edit": "Edit sections and transcript",
+      "lead": "Players follow my view (on or off)",
+      "shareView": "Show to players at this zoom",
+      "closeAll": "Close for everyone",
+      "noViewer": "Handout Lens is switched off for this window."
+    },
+    "Keys": {
+      "zoomIn": "Picture: zoom in",
+      "zoomOut": "Picture: zoom out",
+      "fit": "Picture: whole picture",
+      "next": "Picture: next section (or move right)",
+      "previous": "Picture: previous section (or move left)",
+      "panUp": "Picture: move up",
+      "panDown": "Picture: move down",
+      "lens": "Picture: lens on or off",
+      "reading": "Picture: reading mode",
+      "openFolder": "Open handout folder"
+    },
+    "SELFTEST": {
+      "Title": "Handout Lens self test",
+      "Run": "Run self test",
+      "Hint": "Checks the image window, the storage and a test viewer. The result appears as a whisper in the chat.",
+      "Popout": "Foundry's image window was not found.",
+      "Share": "Foundry's function to show pictures was not found.",
+      "Socket": "The connection to the server is missing.",
+      "Storage": "The storage \"{key}\" is missing.",
+      "Conflict": "{module} also zooms image windows, so the viewer stays off.",
+      "Disabled": "Zoom and lens are switched off in the settings of this device.",
+      "Texts": "Texts missing: {keys}",
+      "Viewer": "The test viewer did not start.",
+      "Problems": "Handout Lens: {problems} of {checks} checks failed.",
+      "Passed": "Handout Lens: all {checks} checks passed.",
+      "Version": "Foundry {current}, verified with {tested}.",
+      "NoSpeech": "This browser cannot read aloud.",
+      "NoFullscreen": "This browser does not allow full screen here, the reading mode fills the window instead.",
+      "NewVersions": "Handout Lens was verified with an older Foundry version ({versions}). Run the self test in the module settings to check it."
+    },
+    "DEBUG": {
+      "Title": "Debug file",
+      "Save": "Save debug file",
+      "Hint": "Saves one file for bug reports about all of Sephral’s modules in this world: versions, settings and what the modules recorded, such as the latest chat messages they read. It contains chat text and whispers, check it before you share it.",
+      "Entry": "Save Debug File (Sephral’s Modules)",
+      "Saved": "Debug file {file} saved. It contains chat text and whispers, check it before you share it."
+    }
+  }
+}

@@ -1,0 +1,1066 @@
+/* Sephral’s Handout Lens */
+
+/* Colors: the warm signature look by default, the dark Foundry look per user */
+.shl-viewer,
+.shl-app {
+  --shl-paper: #fbf6ea;
+  --shl-paper-2: #f3ecde;
+  --shl-card: rgb(255 250 240 / 0.92);
+  --shl-ink: #1f1a17;
+  --shl-muted: #6f655d;
+  --shl-line: rgb(73 49 32 / 0.14);
+  --shl-soft: rgb(73 49 32 / 0.07);
+  --shl-field: #fffdf7;
+  --shl-accent: #b5512d;
+  --shl-accent-soft: rgb(181 81 45 / 0.12);
+  --shl-on-accent: #fffaf0;
+  --shl-radius: 12px;
+  --shl-read-font: Georgia, "Palatino Linotype", "Book Antiqua", serif;
+}
+
+.shl-viewer[data-shl-theme="foundry"],
+.shl-app[data-shl-theme="foundry"] {
+  --shl-paper: #24211e;
+  --shl-paper-2: #1c1a18;
+  --shl-card: rgb(255 255 255 / 0.05);
+  --shl-ink: #ece5d8;
+  --shl-muted: #aba191;
+  --shl-line: rgb(255 255 255 / 0.12);
+  --shl-soft: rgb(255 255 255 / 0.06);
+  --shl-field: rgb(0 0 0 / 0.25);
+  --shl-accent: #d8784e;
+  --shl-accent-soft: rgb(216 120 78 / 0.18);
+  --shl-on-accent: #1c1a18;
+  --shl-radius: 6px;
+  --shl-read-font: var(--font-body, "Signika", sans-serif);
+}
+
+/* -------------------------------------------- */
+/*  Image window                                */
+/* -------------------------------------------- */
+
+.application.image-popout.shl-enhanced .window-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+.application.image-popout figure.shl-figure {
+  padding: 0;
+  min-height: 0;
+  gap: 0;
+}
+
+.application.image-popout figure.shl-figure > figcaption {
+  margin: 0;
+  padding: 0.5rem 1rem 0.65rem;
+}
+
+/* The self-test window stays invisible */
+.application.image-popout.shl-selftest {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.shl-viewer {
+  --shl-scale: 1;
+  --shl-filter: none;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  container-type: inline-size;
+}
+
+.shl-frame {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+}
+
+.shl-viewer:fullscreen,
+.shl-viewer.shl-maximized {
+  width: 100vw;
+  height: 100vh;
+  background: #0d0d10;
+}
+
+.shl-viewer.shl-maximized {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+
+/* A blurred backdrop or hidden overflow would keep the filled browser window inside the image window */
+.application.image-popout.shl-max-host,
+.application.image-popout.shl-max-host .window-content {
+  overflow: visible;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* -------------------------------------------- */
+/*  Stage and picture                           */
+/* -------------------------------------------- */
+
+.shl-stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+
+.shl-stage:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--color-border-highlight, #ff6400);
+}
+
+.shl-stage.shl-grabbing {
+  cursor: grabbing;
+}
+
+.shl-stage.shl-drawing {
+  cursor: crosshair;
+}
+
+.shl-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+/* Only while the picture moves: a layer kept for the GPU all the time would stay blurry after zooming in */
+.shl-viewer.shl-moving .shl-layer {
+  will-change: transform;
+}
+
+.application.image-popout .shl-layer > .shl-media {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: fill;
+  border: none;
+  box-shadow: none;
+  filter: var(--shl-filter);
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.shl-viewer.shl-pixel .shl-media,
+.shl-viewer.shl-pixel .shl-lens img {
+  image-rendering: pixelated;
+}
+
+/* Reading sections, in the coordinates of the picture */
+.shl-regions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.shl-region {
+  position: absolute;
+  box-sizing: border-box;
+  transform-origin: center;
+  border: calc(2px / var(--shl-scale)) solid transparent;
+  border-radius: calc(4px / var(--shl-scale));
+}
+
+.shl-viewer.shl-editing .shl-region {
+  border-color: rgb(255 200 90 / 0.9);
+  background: rgb(255 200 90 / 0.08);
+}
+
+.shl-viewer.shl-editing .shl-region.active {
+  border-color: #ff8a3d;
+  background: rgb(255 138 61 / 0.14);
+}
+
+/* While editing, a frame can be grabbed: drag it to move it, the selected one has handles */
+.shl-viewer.shl-editing .shl-region {
+  pointer-events: auto;
+  cursor: move;
+}
+
+.shl-viewer.shl-editing .shl-stage.shl-drawing .shl-region {
+  pointer-events: none;
+}
+
+/* The selected frame lies above the others, so its handles win where frames overlap */
+.shl-viewer.shl-editing .shl-region.selected {
+  z-index: 1;
+  border-color: #ff8a3d;
+  background: rgb(255 138 61 / 0.16);
+}
+
+/* The number would sit on the corner handle */
+.shl-viewer.shl-editing .shl-region.selected .shl-marker {
+  display: none;
+}
+
+.shl-handle {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  width: calc(14px / var(--shl-scale));
+  height: calc(14px / var(--shl-scale));
+  margin: calc(-7px / var(--shl-scale)) 0 0 calc(-7px / var(--shl-scale));
+  border: calc(2px / var(--shl-scale)) solid #fffaf0;
+  border-radius: calc(3px / var(--shl-scale));
+  background: #ff8a3d;
+  box-shadow: 0 0 calc(4px / var(--shl-scale)) rgb(0 0 0 / 0.55);
+  pointer-events: auto;
+}
+
+.shl-handle-nw { left: 0; top: 0; cursor: nwse-resize; }
+.shl-handle-n { left: 50%; top: 0; cursor: ns-resize; }
+.shl-handle-ne { left: 100%; top: 0; cursor: nesw-resize; }
+.shl-handle-e { left: 100%; top: 50%; cursor: ew-resize; }
+.shl-handle-se { left: 100%; top: 100%; cursor: nwse-resize; }
+.shl-handle-s { left: 50%; top: 100%; cursor: ns-resize; }
+.shl-handle-sw { left: 0; top: 100%; cursor: nesw-resize; }
+.shl-handle-w { left: 0; top: 50%; cursor: ew-resize; }
+
+.shl-handle-turn {
+  left: 50%;
+  top: calc(-34px / var(--shl-scale));
+  width: calc(18px / var(--shl-scale));
+  height: calc(18px / var(--shl-scale));
+  margin: calc(-9px / var(--shl-scale)) 0 0 calc(-9px / var(--shl-scale));
+  border-radius: 50%;
+  background: #2d7753;
+  cursor: grab;
+}
+
+.shl-turn-line {
+  position: absolute;
+  left: 50%;
+  top: calc(-34px / var(--shl-scale));
+  width: calc(2px / var(--shl-scale));
+  height: calc(34px / var(--shl-scale));
+  margin-left: calc(-1px / var(--shl-scale));
+  background: #fffaf0;
+  box-shadow: 0 0 calc(3px / var(--shl-scale)) rgb(0 0 0 / 0.5);
+  pointer-events: none;
+}
+
+.shl-viewer:not(.shl-editing) .shl-region:has(.shl-marker:hover) {
+  border-color: rgb(255 200 90 / 0.85);
+}
+
+.shl-viewer .shl-marker {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  transform: translate(calc(-9px / var(--shl-scale)), calc(-9px / var(--shl-scale))) scale(calc(1 / var(--shl-scale)));
+  transform-origin: 0 0;
+  border-radius: 50%;
+  border: 2px solid #fffaf0;
+  background: #b5512d;
+  color: #fffaf0;
+  font: 700 13px/1 var(--font-body, sans-serif);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.45);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.shl-viewer.shl-markers .shl-marker {
+  display: grid;
+  place-items: center;
+}
+
+.shl-viewer .shl-region.active .shl-marker {
+  background: #2d7753;
+}
+
+/* Lens */
+.shl-lens {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #111;
+  box-shadow: 0 0 0 3px rgb(255 250 240 / 0.9), 0 10px 30px rgb(0 0 0 / 0.55);
+  pointer-events: none;
+}
+
+.shl-lens img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: none;
+  max-height: none;
+  border: none;
+  transform-origin: 0 0;
+  filter: var(--shl-filter);
+}
+
+/* Corners of a note while they are clicked, in stage coordinates */
+.shl-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.shl-corners polyline {
+  fill: rgb(255 179 71 / 0.14);
+  stroke: #ffb347;
+  stroke-width: 2;
+  stroke-dasharray: 7 4;
+  stroke-linejoin: round;
+}
+
+.shl-corners line.shl-close {
+  stroke: #ffb347;
+  stroke-width: 1.5;
+  stroke-dasharray: 2 5;
+  opacity: 0.75;
+}
+
+.shl-corners circle {
+  fill: #ffb347;
+  stroke: #1c1a18;
+  stroke-width: 1.5;
+}
+
+.shl-corners circle.shl-first {
+  fill: #fffaf0;
+  stroke: #ff8a3d;
+  stroke-width: 3;
+}
+
+/* Frame while a section is drawn */
+.shl-band {
+  position: absolute;
+  z-index: 3;
+  border: 2px dashed #ffb347;
+  background: rgb(255 179 71 / 0.12);
+  pointer-events: none;
+}
+
+/* -------------------------------------------- */
+/*  Notes over the picture                      */
+/* -------------------------------------------- */
+
+.shl-hud {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.shl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 100%;
+  padding: 4px 5px 4px 10px;
+  border-radius: 999px;
+  background: rgb(15 15 20 / 0.82);
+  color: #f3eee4;
+  font-size: 12px;
+  line-height: 1.3;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.35);
+  backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+.shl-chip-lead,
+.shl-chip-follow {
+  background: rgb(45 119 83 / 0.9);
+}
+
+.shl-chip-draw {
+  background: rgb(154 91 19 / 0.92);
+}
+
+.shl-chip-warn {
+  background: rgb(140 62 71 / 0.9);
+}
+
+.shl-viewer .shl-chip button {
+  flex: none;
+  width: auto;
+  height: 22px;
+  min-height: 0;
+  margin: 0;
+  padding: 0 9px;
+  border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.14);
+  color: inherit;
+  font-size: 11px;
+  line-height: 20px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-viewer .shl-chip button.icon {
+  width: 22px;
+  padding: 0;
+}
+
+.shl-viewer .shl-chip button:hover {
+  background: rgb(255 255 255 / 0.26);
+}
+
+/* -------------------------------------------- */
+/*  Toolbar and reading aids                    */
+/* -------------------------------------------- */
+
+.shl-toolbar {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 5;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  width: max-content;
+  max-width: calc(100% - 16px);
+  padding: 4px;
+  border-radius: 12px;
+  background: rgb(15 15 20 / 0.82);
+  box-shadow: 0 4px 18px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(6px);
+  transition: opacity 0.35s ease;
+}
+
+.shl-viewer.shl-idle .shl-toolbar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shl-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.shl-group + .shl-group {
+  padding-left: 4px;
+  border-left: 1px solid rgb(255 255 255 / 0.15);
+}
+
+.shl-viewer .shl-tool {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #ece5d8;
+  font-size: 14px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-viewer .shl-tool:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.12);
+  color: #fff;
+}
+
+.shl-viewer .shl-tool.active {
+  border-color: rgb(229 130 70 / 0.75);
+  background: rgb(229 130 70 / 0.35);
+  color: #fff;
+}
+
+.shl-viewer .shl-tool:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.shl-viewer .shl-tool:focus-visible {
+  outline: 2px solid #ffb347;
+  outline-offset: 1px;
+}
+
+.shl-viewer .shl-zoom,
+.shl-viewer .shl-nav {
+  width: auto;
+  padding: 0 7px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.shl-viewer .shl-zoom {
+  min-width: 54px;
+}
+
+.shl-tool-text {
+  display: block;
+  max-width: 15em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shl-popover {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;
+  z-index: 6;
+  width: min(290px, calc(100% - 16px));
+  transform: translateX(-50%);
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgb(15 15 20 / 0.92);
+  color: #ece5d8;
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(6px);
+}
+
+.shl-aids {
+  display: grid;
+  gap: 8px;
+}
+
+.shl-aid {
+  display: grid;
+  grid-template-columns: 6.5em 1fr 3.4em;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.shl-aid input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+.shl-aid output {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.shl-aid.shl-check {
+  grid-template-columns: auto 1fr;
+}
+
+.shl-aid.shl-check input {
+  margin: 0;
+}
+
+.shl-viewer .shl-aids button {
+  height: 28px;
+  min-height: 0;
+  margin: 2px 0 0;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.08);
+  color: inherit;
+  font-size: 12px;
+}
+
+/* -------------------------------------------- */
+/*  Panel: transcript and editing               */
+/* -------------------------------------------- */
+
+.shl-panel {
+  flex: 0 0 clamp(240px, 34%, 400px);
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--shl-line);
+  background: linear-gradient(180deg, var(--shl-paper) 0%, var(--shl-paper-2) 100%);
+  color: var(--shl-ink);
+  font-size: 13px;
+}
+
+.shl-panel[hidden] {
+  display: none;
+}
+
+@container (max-width: 620px) {
+  .shl-frame {
+    flex-direction: column;
+  }
+
+  .shl-panel {
+    flex-basis: 45%;
+    border-left: none;
+    border-top: 1px solid var(--shl-line);
+  }
+}
+
+.shl-panel-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 8px 8px 12px;
+  border-bottom: 1px solid var(--shl-line);
+}
+
+.shl-panel-head h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  border: none;
+  overflow: hidden;
+  color: var(--shl-ink);
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shl-panel-head h3 i {
+  margin-right: 4px;
+  color: var(--shl-accent);
+}
+
+.shl-viewer .shl-icon,
+.shl-app .shl-icon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--shl-muted);
+  font-size: 13px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-viewer .shl-icon:hover:not(:disabled),
+.shl-app .shl-icon:hover:not(:disabled) {
+  background: var(--shl-soft);
+  color: var(--shl-ink);
+}
+
+.shl-viewer .shl-icon.active,
+.shl-app .shl-icon.active {
+  background: var(--shl-accent-soft);
+  color: var(--shl-accent);
+}
+
+.shl-viewer .shl-icon:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.shl-save span {
+  display: none;
+  color: var(--shl-muted);
+  font-size: 11px;
+}
+
+.shl-viewer[data-saving="pending"] .shl-save [data-state="pending"],
+.shl-viewer[data-saving="saving"] .shl-save [data-state="saving"],
+.shl-viewer[data-saving="saved"] .shl-save [data-state="saved"],
+.shl-viewer[data-saving="failed"] .shl-save [data-state="failed"] {
+  display: inline;
+}
+
+.shl-viewer[data-saving="failed"] .shl-save [data-state="failed"] {
+  color: #8c3e47;
+}
+
+.shl-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 12px 16px;
+}
+
+.shl-read section {
+  margin: 0 0 6px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: var(--shl-radius);
+}
+
+.shl-read section.active {
+  border-color: var(--shl-line);
+  background: var(--shl-card);
+}
+
+.shl-read h4 {
+  margin: 0 0 4px;
+  border: none;
+  font-family: var(--font-body, sans-serif);
+  font-size: 13px;
+}
+
+.shl-viewer .shl-read h4 button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--shl-muted);
+  font-family: var(--font-body, sans-serif);
+  font-size: 13px;
+  font-variant: normal;
+  font-weight: 700;
+  text-transform: none;
+  text-align: left;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-viewer .shl-read h4 button:hover {
+  color: var(--shl-accent);
+}
+
+.shl-read section.active h4 button {
+  color: var(--shl-accent);
+}
+
+.shl-num {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.6em;
+  height: 1.6em;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--shl-accent-soft);
+  color: var(--shl-accent);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+.shl-text {
+  font-family: var(--shl-read-font);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.shl-empty {
+  margin: 4px 0;
+  color: var(--shl-muted);
+  font-size: 12px;
+  font-style: italic;
+}
+
+.shl-hint {
+  margin: 0 0 10px;
+  color: var(--shl-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.shl-viewer .shl-wide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 32px;
+  margin: 0 0 10px;
+  border: 1px solid var(--shl-accent);
+  border-radius: var(--shl-radius);
+  background: var(--shl-accent);
+  color: var(--shl-on-accent);
+  font-weight: 700;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-edit-list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.shl-edit-list li {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 8px;
+  border: 1px solid var(--shl-line);
+  border-radius: var(--shl-radius);
+  background: var(--shl-card);
+}
+
+.shl-edit-list li.active,
+.shl-edit-list li.selected {
+  border-color: var(--shl-accent);
+  box-shadow: 0 0 0 1px var(--shl-accent-soft);
+}
+
+/* The section whose frame has handles in the picture */
+.shl-edit-list li.selected {
+  background: var(--shl-accent-soft);
+}
+
+.shl-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.shl-edit-row .shl-num {
+  margin-right: 4px;
+}
+
+.shl-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: -2px;
+}
+
+.shl-spacer {
+  flex: 1;
+}
+
+.shl-panel input[type="text"],
+.shl-panel input[type="number"],
+.shl-panel textarea,
+.shl-panel select {
+  min-width: 0;
+  border: 1px solid var(--shl-line);
+  border-radius: 8px;
+  background: var(--shl-field);
+  color: var(--shl-ink);
+  font-size: 13px;
+}
+
+.shl-edit-row input[type="text"] {
+  flex: 1;
+  height: 28px;
+}
+
+.shl-panel textarea {
+  width: 100%;
+  min-height: 4.5em;
+  padding: 6px 8px;
+  font-family: var(--shl-read-font);
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.shl-angle {
+  display: grid;
+  grid-template-columns: auto 1fr 4.5em;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--shl-muted);
+  font-size: 12px;
+}
+
+.shl-angle input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+.shl-angle input[type="number"] {
+  height: 26px;
+  text-align: right;
+}
+
+.shl-field {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 10px;
+  color: var(--shl-muted);
+  font-size: 12px;
+}
+
+.shl-field select {
+  height: 30px;
+}
+
+/* -------------------------------------------- */
+/*  Handout folder                              */
+/* -------------------------------------------- */
+
+.shl-app .window-content {
+  padding: 0;
+  background: linear-gradient(180deg, var(--shl-paper) 0%, var(--shl-paper-2) 100%);
+  color: var(--shl-ink);
+}
+
+.shl-folder-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.shl-folder-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--shl-line);
+}
+
+.shl-folder-head input[type="search"] {
+  flex: 1;
+  height: 30px;
+  border: 1px solid var(--shl-line);
+  border-radius: 999px;
+  background: var(--shl-field);
+  color: var(--shl-ink);
+  padding: 0 12px;
+}
+
+.shl-folder-count {
+  flex: none;
+  color: var(--shl-muted);
+  font-size: 12px;
+}
+
+.shl-folder-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  align-content: start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.shl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--shl-line);
+  border-radius: var(--shl-radius);
+  background: var(--shl-card);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+}
+
+.shl-card[hidden] {
+  display: none;
+}
+
+.shl-card.pinned {
+  border-color: var(--shl-accent);
+}
+
+.shl-app .shl-card-open {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 8px;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: var(--shl-ink);
+  font: inherit;
+  text-align: left;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.shl-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 4px;
+  border: none;
+  object-fit: cover;
+  background: var(--shl-soft);
+}
+
+.shl-thumb-video {
+  display: grid;
+  place-items: center;
+  color: var(--shl-muted);
+  font-size: 28px;
+}
+
+.shl-card-title {
+  padding: 0 8px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shl-card-date {
+  padding: 0 8px;
+  color: var(--shl-muted);
+  font-size: 11px;
+}
+
+.shl-card-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 10px;
+  background: var(--shl-card);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.shl-card:hover .shl-card-actions,
+.shl-card:focus-within .shl-card-actions,
+.shl-card.pinned .shl-card-actions {
+  opacity: 1;
+}
+
+.shl-folder-empty {
+  margin: 0;
+  padding: 40px 24px;
+  color: var(--shl-muted);
+  text-align: center;
+}

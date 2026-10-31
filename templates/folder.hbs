@@ -1,0 +1,36 @@
+<div class="shl-folder-shell">
+  <header class="shl-folder-head">
+    <input type="search" name="search" value="{{search}}" placeholder="{{text.search}}" aria-label="{{text.search}}"
+      autocomplete="off">
+    <span class="shl-folder-count">{{text.count}}</span>
+  </header>
+  {{#if count}}
+  <ul class="shl-folder-grid">
+    {{#each entries}}
+    <li class="shl-card{{#if pinned}} pinned{{/if}}" data-entry-id="{{id}}" data-search="{{needle}}">
+      <button type="button" class="shl-card-open" data-action="openEntry" aria-label="{{../text.open}}: {{label}}">
+        {{#if video}}
+        <span class="shl-thumb shl-thumb-video"><i class="fa-solid fa-film" inert></i></span>
+        {{else}}
+        <img class="shl-thumb" src="{{src}}" alt="" loading="lazy" draggable="false">
+        {{/if}}
+        <span class="shl-card-title">{{label}}</span>
+        <span class="shl-card-date">{{date}}</span>
+      </button>
+      <div class="shl-card-actions">
+        <button type="button" class="shl-icon{{#if pinned}} active{{/if}}" data-action="pinEntry"
+          data-tooltip="{{#if pinned}}{{../text.unpin}}{{else}}{{../text.pin}}{{/if}}"
+          aria-label="{{#if pinned}}{{../text.unpin}}{{else}}{{../text.pin}}{{/if}}">
+          <i class="fa-solid fa-thumbtack" inert></i></button>
+        <button type="button" class="shl-icon" data-action="renameEntry" data-tooltip="{{../text.rename}}"
+          aria-label="{{../text.rename}}"><i class="fa-solid fa-pen" inert></i></button>
+        <button type="button" class="shl-icon" data-action="removeEntry" data-tooltip="{{../text.remove}}"
+          aria-label="{{../text.remove}}"><i class="fa-solid fa-trash" inert></i></button>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p class="shl-folder-empty"><i class="fa-regular fa-folder-open" inert></i> {{text.empty}}</p>
+  {{/if}}
+</div>
