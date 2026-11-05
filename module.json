@@ -2,7 +2,7 @@
   "id": "sephrals-handout-lens",
   "title": "Sephral’s Handout Lens",
   "description": "Every image the GM shows can be zoomed, searched with a magnifying lens and read piece by piece: reading aids, straightened reading sections with a transcript that can be read aloud, the GM's view shared live, and a handout folder that keeps every image a player was shown.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": {
     "minimum": 13,
     "verified": "14.370"
