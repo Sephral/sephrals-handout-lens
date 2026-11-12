@@ -113,7 +113,7 @@ With the GM’s consent only the active GM’s browser counts, and it sends at m
 * on how many of the last 30 days the module was used
 * how often the GM uses the lens, the reading mode, the reading aids and the transcript, has it read aloud, saves reading sections, leads the players' view, shows a picture at a zoom, closes a picture for everyone and opens the handout folder
 * the settings *Look*, *Toolbar*, *Largest zoom*, *Number the reading sections*, *Remember the view*, *Collect shown pictures* and *Show to late players* (only the chosen option)
-* where errors occur in the module code: file, line and error type, never the error message
+* where errors occur in the module code: file, line, error type and whether the error arose in the module itself, in Foundry, in the game system or in another module, never the error message or the name of another module
 
 No pictures, file names, titles, transcripts or other content of the world are sent, and nothing the players do is counted.
 
