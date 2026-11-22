@@ -59,7 +59,9 @@ export function registerSync() {
     for ( const viewer of HandoutViewer.all() ) if ( viewer.followed && (viewer.leader === user.id) ) viewer.endFollowed();
   });
 
+  // A viewer of a sample window (api.samples) stays out of every message
   HandoutViewer.on("attach", viewer => {
+    if ( viewer.isSample ) return;
     const view = pending.get(viewer.key);
     if ( view && (Date.now() - view.at < PENDING_MS) ) viewer.receiveFrame(view.frame, view.region, false);
     pending.delete(viewer.key);
@@ -67,14 +69,15 @@ export function registerSync() {
     if ( !game.user.isGM ) send({type: "request", key: viewer.key});
   });
   HandoutViewer.on("view", (viewer, {remote}) => {
-    if ( viewer.leading && !remote ) sendLeadingView(viewer);
+    if ( viewer.leading && !remote && !viewer.isSample ) sendLeadingView(viewer);
   });
   HandoutViewer.on("lead", (viewer, {leading}) => {
+    if ( viewer.isSample ) return;
     if ( leading ) sendLeadingView(viewer, true);
     else send({type: "followEnd", key: viewer.key});
   });
   HandoutViewer.on("close", viewer => {
-    if ( viewer.leading ) send({type: "followEnd", key: viewer.key});
+    if ( viewer.leading && !viewer.isSample ) send({type: "followEnd", key: viewer.key});
   });
 }
 

@@ -5,6 +5,7 @@
  */
 
 import {MODULE_ID, canEdit, esc, keyOf, openSettings, setting, t} from "./config.mjs";
+import {sampleBlocked} from "./samples.mjs";
 import {MIN_REGION, REGION_LIMIT, hasTranscript, makeId, normalizeHandout} from "./handout-data.mjs";
 import * as math from "./view-math.mjs";
 import {closePanel, onPanelEvent, refreshPanel, renderPanel, stopSpeech} from "./panel.mjs";
@@ -168,7 +169,7 @@ export class HandoutViewer {
    */
   static handoutsChanged() {
     for ( const viewer of HandoutViewer.all() ) {
-      if ( viewer.editing || !viewer.ready ) continue;
+      if ( viewer.editing || !viewer.ready || viewer.isSample ) continue;
       viewer.handout = handoutFor(viewer.key);
       if ( viewer.regionIndex >= viewer.handout.regions.length ) viewer.regionIndex = -1;
       viewer.redraw();
@@ -197,7 +198,8 @@ export class HandoutViewer {
     this.fine = 0;
     this.regionIndex = -1;
     this.aids = {...DEFAULT_AIDS};
-    this.handout = handoutFor(this.key);
+    this.isSample = !!app.isSample;
+    this.handout = this.#storedHandout();
     this.lensOn = false;
     this.lensZoom = setting("lensZoom");
     this.panelMode = null;
@@ -236,6 +238,19 @@ export class HandoutViewer {
   /** Is this viewer shown on the whole screen? */
   get isFullscreen() {
     return !!this.root && (this.root.ownerDocument.fullscreenElement === this.root);
+  }
+
+  /** May this user edit the sections? A sample window lets every GM look at the editing, it saves nothing. */
+  get mayEdit() {
+    return this.isSample ? game.user.isGM : canEdit();
+  }
+
+  /**
+   * The sections and transcript of the picture: the stored ones, or the made-up ones of a sample window.
+   * @returns {{regions: object[], text: string, lang: string}}
+   */
+  #storedHandout() {
+    return this.isSample ? normalizeHandout(foundry.utils.deepClone(this.app.sampleHandout ?? {})) : handoutFor(this.key);
   }
 
   /** The rotation the user chose: steps of 90 degrees plus the fine angle. */
@@ -381,7 +396,7 @@ export class HandoutViewer {
    * @param {string} feature
    */
   count(feature) {
-    if ( this.counted.has(feature) ) return;
+    if ( this.isSample || this.counted.has(feature) ) return;
     this.counted.add(feature);
     countFeature(MODULE_ID, feature);
   }
@@ -421,8 +436,8 @@ export class HandoutViewer {
   #initView() {
     this.ready = true;
     // The sections may have changed while the picture loaded
-    this.handout = handoutFor(this.key);
-    const memory = setting("rememberView") ? rememberedView(this.key) : null;
+    if ( !this.isSample ) this.handout = handoutFor(this.key);
+    const memory = (setting("rememberView") && !this.isSample) ? rememberedView(this.key) : null;
     if ( memory ) {
       this.rot90 = Math.round((Number(memory.rot90) || 0) / 90) * 90;
       this.fine = Math.min(Math.max(Number(memory.fine) || 0, -45), 45);
@@ -443,7 +458,7 @@ export class HandoutViewer {
         {mode, save: false});
     }
     this.redraw();
-    markUsed(MODULE_ID);
+    if ( !this.isSample ) markUsed(MODULE_ID);
     this.#emit("attach");
   }
 
@@ -522,7 +537,7 @@ export class HandoutViewer {
 
   /** Remember the view of this image in the browser, a moment after it stops changing. */
   #scheduleRemember() {
-    if ( !setting("rememberView") ) return;
+    if ( !setting("rememberView") || this.isSample ) return;
     clearTimeout(this.#rememberTimer);
     this.#rememberTimer = setTimeout(() => {
       if ( this.disposed || !this.ready ) return;
@@ -790,6 +805,7 @@ export class HandoutViewer {
     this.#renderRegions();
     this.#renderToolbar();
     if ( list ) renderPanel(this);
+    if ( this.isSample ) return;
     clearTimeout(this.#saveTimer);
     this.root.dataset.saving = "pending";
     this.#saveTimer = setTimeout(() => this.#flushSave(), 600);
@@ -812,7 +828,7 @@ export class HandoutViewer {
    * @param {boolean} [force]
    */
   toggleEdit(force) {
-    if ( !canEdit() ) return;
+    if ( !this.mayEdit ) return;
     const editing = force ?? !this.editing;
     if ( editing === this.editing ) return;
     if ( !editing ) {
@@ -828,7 +844,7 @@ export class HandoutViewer {
     else {
       this.editing = true;
       // While the last save is on its way, the setting is older than what this viewer holds
-      if ( this.root.dataset.saving !== "saving" ) this.handout = handoutFor(this.key);
+      if ( this.root.dataset.saving !== "saving" && !this.isSample ) this.handout = handoutFor(this.key);
       this.panelMode = "edit";
       renderPanel(this);
     }
@@ -966,7 +982,7 @@ export class HandoutViewer {
       kept ? t("SHL.Tool.unkeep") : t("SHL.Tool.keep"), {active: kept}));
     if ( game.user.isGM ) {
       extra.push(tool("lead", "fa-solid fa-tower-broadcast", t("SHL.Tool.lead"), {active: this.leading}));
-      if ( canEdit() ) extra.push(tool("edit", "fa-solid fa-pen-to-square", t("SHL.Tool.edit"), {active: this.editing}));
+      if ( this.mayEdit ) extra.push(tool("edit", "fa-solid fa-pen-to-square", t("SHL.Tool.edit"), {active: this.editing}));
     }
     extra.push(tool("settings", "fa-solid fa-gear", t("SHL.gear")));
     groups.push(extra.join(""));
@@ -1147,6 +1163,7 @@ export class HandoutViewer {
 
   /** Keep or remove the picture from this user's handout folder. */
   async toggleFolder() {
+    if ( this.isSample ) return sampleBlocked();
     if ( inFolder(this.src) ) await removeImageFromFolder(this.src);
     else {
       const title = this.app.title || this.app.options.window?.title || "";

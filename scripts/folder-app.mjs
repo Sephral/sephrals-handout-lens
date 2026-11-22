@@ -40,7 +40,8 @@ export class HandoutFolder extends HandlebarsApplicationMixin(ApplicationV2) {
   /** @override */
   async _prepareContext() {
     const locale = game.i18n.lang;
-    const entries = folderSorted(folderEntries()).map(entry => {
+    // A sample window (api.samples) shows made-up entries
+    const entries = folderSorted(this.sampleEntries ?? folderEntries()).map(entry => {
       const label = entry.title || t("SHL.Folder.untitled");
       return {
         ...entry,

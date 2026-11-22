@@ -228,6 +228,33 @@
       "Hint": "Speichert eine Datei für Fehlerberichte über alle Module von Sephral in dieser Welt: Versionen, Einstellungen und was die Module aufgezeichnet haben, etwa die letzten Chatnachrichten, die sie gelesen haben. Sie enthält Chattext und Flüsternachrichten, prüfe sie vor dem Teilen.",
       "Entry": "Debug-Datei speichern (Sephral’s Module)",
       "Saved": "Debug-Datei {file} gespeichert. Sie enthält Chattext und Flüsternachrichten, prüfe sie vor dem Teilen."
+    },
+    "Sample": {
+      "group": "Handout-Lupe",
+      "reading": "Bild mit Leseabschnitten",
+      "text": "Abschrift und Vorlesen",
+      "aids": "Lesehilfen",
+      "edit": "Abschnitte bearbeiten (SL)",
+      "draw": "Abschnitt zeichnen (SL)",
+      "lead": "Spieler führen (SL)",
+      "follow": "Der SL folgen",
+      "alone": "Allein umschauen",
+      "small": "Bild zu klein (SL)",
+      "folder": "Handout-Mappe",
+      "title": "Brief des Hafenmeisters",
+      "caption": "Ein Brief aus dem Hafenkontor",
+      "whole": "Der Hafenmeister bittet die Gruppe, ihn vor Sonnenaufgang an der alten Mühle zu treffen. Er schreibt, dass die Ladung des Schiffs Möwe fehlt und er niemandem im Hafen traut.",
+      "s1Title": "Kopfzeile",
+      "s1Text": "An die tapferen Reisenden im Gasthaus Zum Anker. Dieser Brief ist nur für eure Augen.",
+      "s2Title": "Haupttext",
+      "s2Text": "Die Möwe lief vor zwei Nächten ein. Zwölf Kisten standen auf ihrer Liste, neun wurden ausgeladen. Niemand hat den Rest abtransportieren sehen. Trefft mich vor Sonnenaufgang an der alten Mühle und bringt niemanden mit.",
+      "s3Title": "Notiz am Rand",
+      "s3Text": "Verbrennt das nach dem Lesen. Der Mann mit dem grauen Schal beobachtet den Anleger.",
+      "folder1": "Brief des Hafenmeisters",
+      "folder2": "Karte der alten Mühle",
+      "folder3": "Steckbrief",
+      "folder4": "Speisekarte des Gasthauses Zum Anker",
+      "folder5": "Skizze der fehlenden Kisten"
     }
   }
 }

@@ -156,5 +156,6 @@ The first button in the module settings, *Sephral’s Modules* (GMs only), opens
 | `viewers()`, `viewerOf(app)` | The open viewers, the viewer of an image window |
 | `shareView(app)` | Shows the picture of an image window to all players at the GM's zoom (GM) |
 | `closeForAll(src)` | Closes a picture on every other screen (GM) |
+| `samples()` | The sample windows: an image window in each state (sections, transcript, reading aids, editing, leading, following) and the handout folder, with made-up data. Nothing is saved or sent. |
 | `runSelfTest()` | The self test (GM) |
 | `saveDebugFile()` | Saves the debug file of Sephral’s modules (GM) |

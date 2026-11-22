@@ -85,7 +85,7 @@ function readHTML(viewer) {
       ${speech ? iconButton("data-shl-panel=\"speak\"", "fa-solid fa-volume-high", t("SHL.Panel.speak")) : ""}
       ${iconButton("data-shl-panel=\"close\"", "fa-solid fa-xmark", t("SHL.Panel.close"))}
     </header>
-    <div class="shl-panel-body shl-read" style="font-size: ${setting("textSize")}px">${sections.join("")}</div>`;
+    <div class="shl-panel-body shl-read" style="font-size: ${viewer.sampleTextSize ?? setting("textSize")}px">${sections.join("")}</div>`;
 }
 
 /**
@@ -223,8 +223,9 @@ function toggleSpeech(viewer) {
  * @param {number} step
  */
 async function changeTextSize(viewer, step) {
-  const size = Math.min(Math.max(setting("textSize") + step, TEXT_SIZES.min), TEXT_SIZES.max);
-  await game.settings.set(MODULE_ID, "textSize", size);
+  const size = Math.min(Math.max((viewer.sampleTextSize ?? setting("textSize")) + step, TEXT_SIZES.min), TEXT_SIZES.max);
+  if ( viewer.isSample ) viewer.sampleTextSize = size;
+  else await game.settings.set(MODULE_ID, "textSize", size);
   const body = viewer.panel.querySelector(".shl-read");
   if ( body ) body.style.fontSize = `${size}px`;
 }

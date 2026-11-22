@@ -4,6 +4,8 @@ import {saveDebugFile} from "./debug-file.mjs";
 import {registerHubModule} from "./hub.mjs";
 import {openFolder, refreshFolder} from "./folder-app.mjs";
 import {registerKeys} from "./keys.mjs";
+import {sampleBlocked} from "./samples.mjs";
+import {sampleWindows} from "./sample-windows.mjs";
 import {applyModuleLanguage} from "./language.mjs";
 import {noticeNewVersions, runSelfTest} from "./selftest.mjs";
 import {changeLanguage, registerSettings} from "./settings.mjs";
@@ -53,6 +55,8 @@ Hooks.once("init", () => {
     shareView: app => shareView(HandoutViewer.of(app)),
     /** Close a picture on every client (GM). */
     closeForAll,
+    /** The windows filled with made-up data, nothing saved or sent (translators, testing; see samples.mjs). */
+    samples: sampleWindows,
     /** Check the module (GM). */
     runSelfTest,
     /** Save the debug file of Sephral's modules (GM): about one chat message, or without an id the latest picture. */
@@ -108,8 +112,10 @@ function redraw() {
  * @param {object[]} controls
  */
 function onHeaderControls(app, controls) {
+  // Sample windows only look: sharing, closing for all and the real folder do nothing there
+  const blocked = new Set(["shlFolder", "shlShareView", "shlCloseAll"]);
   const add = (action, icon, label, visible, handler) => {
-    app.options.actions[action] = handler;
+    app.options.actions[action] = (app.isSample && blocked.has(action)) ? () => sampleBlocked() : handler;
     controls.push({action, icon, label, visible});
   };
   const withViewer = run => function() {

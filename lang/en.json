@@ -228,6 +228,33 @@
       "Hint": "Saves one file for bug reports about all of Sephral’s modules in this world: versions, settings and what the modules recorded, such as the latest chat messages they read. It contains chat text and whispers, check it before you share it.",
       "Entry": "Save Debug File (Sephral’s Modules)",
       "Saved": "Debug file {file} saved. It contains chat text and whispers, check it before you share it."
+    },
+    "Sample": {
+      "group": "Handout Lens",
+      "reading": "Picture with reading sections",
+      "text": "Transcript and reading aloud",
+      "aids": "Reading aids",
+      "edit": "Editing the sections (GM)",
+      "draw": "Drawing a section (GM)",
+      "lead": "Leading the players (GM)",
+      "follow": "Following the GM",
+      "alone": "Looking around alone",
+      "small": "Picture too small (GM)",
+      "folder": "Handout folder",
+      "title": "Letter from the harbor master",
+      "caption": "A letter found in the harbor office",
+      "whole": "The harbor master asks the party to meet him at the old mill before sunrise. He writes that the cargo of the ship Gull is missing and that he trusts nobody in the harbor.",
+      "s1Title": "Header",
+      "s1Text": "To the brave travelers at the Anchor Inn. This letter is for your eyes only.",
+      "s2Title": "Main text",
+      "s2Text": "The Gull came in two nights ago. Twelve crates were on her list, nine were unloaded. Nobody saw the rest leave. Meet me at the old mill before sunrise and bring no one else.",
+      "s3Title": "Note in the margin",
+      "s3Text": "Burn this after reading. The man with the grey scarf is watching the pier.",
+      "folder1": "Letter from the harbor master",
+      "folder2": "Map of the old mill",
+      "folder3": "Wanted poster",
+      "folder4": "Menu of the Anchor Inn",
+      "folder5": "Sketch of the missing crates"
     }
   }
 }
